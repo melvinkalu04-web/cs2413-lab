@@ -26,8 +26,43 @@
 //Output parameter (returnSize): set *returnSize to the number of digits in the returned array.
 
 int* plusOne(int* digits, int digitsSize, int* returnSize) {
-    // TODO: implement
+    // Allocate a new array for the result (same size by default)
+    int* result = (int*)malloc(digitsSize * sizeof(int));
+    if (result == NULL) {
+        *returnSize = 0;
+        return NULL;
+    }
 
-    
+    // Copy input digits into result
+    for (int i = 0; i < digitsSize; i++) {
+        result[i] = digits[i];
+    }
+
+    // Add one, handling carry from the end
+    for (int i = digitsSize - 1; i >= 0; i--) {
+        if (result[i] < 9) {
+            result[i] += 1;
+            *returnSize = digitsSize;
+            return result;
+        }
+        result[i] = 0;
+    }
+
+    // If we got here, it was all 9s -> need a bigger array: 1000...0
+    free(result);
+
+    int* bigger = (int*)malloc((digitsSize + 1) * sizeof(int));
+    if (bigger == NULL) {
+        *returnSize = 0;
+        return NULL;
+    }
+
+    bigger[0] = 1;
+    for (int i = 1; i < digitsSize + 1; i++) {
+        bigger[i] = 0;
+    }
+
+    *returnSize = digitsSize + 1;
+    return bigger;
 }
 

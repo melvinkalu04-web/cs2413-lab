@@ -10,7 +10,6 @@
 // - Do not use recursion.
 // - Return the new head pointer.
 // ------------------------------------------------------------
-
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -18,13 +17,19 @@
  *     struct ListNode *next;
  * };
  */
-
 #include "student.h"
-
 struct ListNode* reverseList(struct ListNode* head) {
     // TODO: implement
     // Hints (optional):
     // - Keep track of previous and current pointers.
     // - Iterate until current becomes NULL.
-
+    struct ListNode* prev = NULL;
+    struct ListNode* curr = head;
+    while (curr != NULL) {
+        struct ListNode* next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
 }
